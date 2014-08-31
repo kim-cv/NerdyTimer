@@ -1,0 +1,32 @@
+﻿<Window x:Class="NerdyTimer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModel="clr-namespace:NerdyTimer.ViewModel"       
+        Title="NerdyTimer" Height="488" Width="723">
+
+    <Window.DataContext>
+        <viewModel:CombinedViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="695">
+            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Height="22
+                    " Margin="229,250,0,-72" Command="{Binding ProjectViewModel.BtnCommandAddProject}" CommandParameter="{Binding ElementName=TextBox_ProjectName, Mode=OneWay}" IsEnabled="{Binding ProjectViewModel.BtnAddProjectIsEnabled}">
+                <TextBlock TextWrapping="Wrap" Text="Add Project"/>
+            </Button>
+            <Button Content="Add Task" HorizontalAlignment="Left" Margin="584,249,0,-72" VerticalAlignment="Top" Width="111" Height="23" Command="{Binding ProjectViewModel.BtnCommandAddTask}" CommandParameter="{Binding ElementName=TextBox_TaskName, Mode=OneWay}" IsEnabled="{Binding ProjectViewModel.BtnAddTaskIsEnabled}"/>
+            <Button x:Name="Btn_StartTimer" Content="Start Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155" Height="90" Command="{Binding ProjectViewModel.BtnCommandStartTimer}" CommandParameter="" IsEnabled="{Binding ProjectViewModel.BtnStartTimerIsEnabled}"/>
+            <Button Content="Stop Timer" HorizontalAlignment="Left" Margin="0,110,0,0" VerticalAlignment="Top" Width="155" Height="90" Command="{Binding ProjectViewModel.BtnCommandStopTimer}" CommandParameter="{Binding ElementName=Label_TimerDisplay, Mode=OneWay}" IsEnabled="{Binding ProjectViewModel.BtnStopTimerIsEnabled}"/>
+            <Label x:Name="Label_TimerDisplay" Content="{Binding ProjectViewModel.TaskTimer.ElapsedTime}" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top" Height="180" Width="525" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Verdana" FontSize="50"/>
+        </Grid>
+
+        <ListBox x:Name="ListBox_Projects" HorizontalAlignment="Left" Height="160" Margin="10,287,0,0" VerticalAlignment="Top" Width="350" ItemsSource="{Binding ProjectViewModel.Projects}" SelectedItem="{Binding ProjectViewModel.SelectedProject}"/>
+
+
+        <ListBox x:Name="ListBox_Tasks" HorizontalAlignment="Left" Height="160" Margin="365,287,0,0" VerticalAlignment="Top" Width="340" ItemsSource="{Binding ProjectViewModel.SelectedProject.Tasks}" SelectedItem="{Binding ProjectViewModel.SelectedTask}" />
+        <TextBox x:Name="TextBox_ProjectName" HorizontalAlignment="Left" Height="22" Margin="10,260,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219"/>
+        <TextBox x:Name="TextBox_TaskName" HorizontalAlignment="Left" Height="23" Margin="365,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="219
+                 "/>
+
+    </Grid>
+</Window>
