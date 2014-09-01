@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NerdyTimer.Model
@@ -36,6 +37,12 @@ namespace NerdyTimer.Model
         }
 
         public void SaveProjects(ICollection<Project> Projects)
+        {
+            Thread SaveProjectsThread = new Thread(() => SaveProjectsThreadMethod(Projects));
+            SaveProjectsThread.Start();
+        }
+
+        private void SaveProjectsThreadMethod(ICollection<Project> Projects)
         {
             //Save mechanism
             SaveableProjectsContainer SaveableProjects = new SaveableProjectsContainer();
