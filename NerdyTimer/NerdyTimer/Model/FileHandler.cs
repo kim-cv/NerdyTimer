@@ -39,6 +39,7 @@ namespace NerdyTimer.Model
         public void SaveProjects(ICollection<Project> Projects)
         {
             Thread SaveProjectsThread = new Thread(() => SaveProjectsThreadMethod(Projects));
+            SaveProjectsThread.Name = "SaveProjectsThread";
             SaveProjectsThread.Start();
         }
 
