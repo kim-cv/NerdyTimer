@@ -207,8 +207,6 @@ namespace NerdyTimer.ViewModel
             try
             {
                 Projects = FileHandler.LoadProjects();
-                string t = "";
-                //Projects.Add(FileHandler.LoadProjects()[0]);
             }
             catch (Exception e)
             {

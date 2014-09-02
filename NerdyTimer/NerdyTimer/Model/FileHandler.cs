@@ -57,29 +57,33 @@ namespace NerdyTimer.Model
             }
 
             //Write to file
-            Stream stream = new FileStream("NerdyTimer_Savings.txt", FileMode.Create, FileAccess.Write, FileShare.None);
-            BinaryFormatter.Serialize(stream, SaveableProjects);
-            stream.Close();
+            using (Stream stream = new FileStream("NerdyTimer_Savings.txt", FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                BinaryFormatter.Serialize(stream, SaveableProjects);   
+            }
         }
+
 
         public ItemsChangeObservableCollection<Project> LoadProjects()
         {
-            //Read from file
-            Stream stream = new FileStream("NerdyTimer_Savings.txt", FileMode.Open, FileAccess.Read, FileShare.Read);
-            SaveableProjectsContainer SaveableProjectsContainer = (SaveableProjectsContainer)BinaryFormatter.Deserialize(stream);
-
-            //Load mechanism
             ItemsChangeObservableCollection<Project> loadedProjects = new ItemsChangeObservableCollection<Project>();
-            foreach (SaveableProject SavedProject in SaveableProjectsContainer.Projects)
+
+            //Read from file
+            using (Stream stream = new FileStream("NerdyTimer_Savings.txt", FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
             {
-                loadedProjects.Add(new Project(SavedProject.Name));
-                foreach (SaveableTask SavedTask in SavedProject.Tasks)
+                SaveableProjectsContainer SaveableProjectsContainer = (SaveableProjectsContainer)BinaryFormatter.Deserialize(stream);
+
+                //Load mechanism
+                foreach (SaveableProject SavedProject in SaveableProjectsContainer.Projects)
                 {
-                    loadedProjects.Last().AddTask(new Task(SavedTask.Name, SavedTask.Time));
-                }
+                    loadedProjects.Add(new Project(SavedProject.Name));
+                    foreach (SaveableTask SavedTask in SavedProject.Tasks)
+                    {
+                        loadedProjects.Last().AddTask(new Task(SavedTask.Name, SavedTask.Time));
+                    }
+                }                
             }
 
-            stream.Close();
             return loadedProjects;
         }
     }
