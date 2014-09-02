@@ -195,14 +195,7 @@ namespace NerdyTimer.ViewModel
         {
             FileHandler = new FileHandler();
 
-            Projects = new ItemsChangeObservableCollection<Project>()
-            {
-                /*Dummy Data
-                new Project("Project1"),
-                new Project("Project2"),
-                new Project("Project3")
-                */
-            };
+            Projects = new ItemsChangeObservableCollection<Project>();
 
             try
             {
@@ -213,7 +206,6 @@ namespace NerdyTimer.ViewModel
             }
 
             TaskTimer = new TaskTimer();
-
 
 
             BtnCommandAddProject = new RelayCommand(new Action<object>(AddProject));
