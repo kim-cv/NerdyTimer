@@ -11,7 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using NerdyTimer.Annotations;
 using NerdyTimer.Model;
-using Task = NerdyTimer.Model.Task;
 
 namespace NerdyTimer.ViewModel
 {
@@ -36,8 +35,8 @@ namespace NerdyTimer.ViewModel
             }
         }
 
-        private Task _selectedTask;
-        public Task SelectedTask
+        private ProjectTask _selectedTask;
+        public ProjectTask SelectedTask
         {
             get { return _selectedTask; }
             set
@@ -197,13 +196,9 @@ namespace NerdyTimer.ViewModel
 
             Projects = new ItemsChangeObservableCollection<Project>();
 
-            try
-            {
+            Task.Run(() => { 
                 Projects = FileHandler.LoadProjects();
-            }
-            catch (Exception e)
-            {
-            }
+            });
 
             TaskTimer = new TaskTimer();
 

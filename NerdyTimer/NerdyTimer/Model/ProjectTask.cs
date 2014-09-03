@@ -5,7 +5,7 @@ using NerdyTimer.Annotations;
 
 namespace NerdyTimer.Model
 {
-    public class Task : INotifyPropertyChanged
+    public class ProjectTask : INotifyPropertyChanged
     {
         private string _time = "";
         public string Time
@@ -30,11 +30,11 @@ namespace NerdyTimer.Model
         }
 
         
-        public Task(string name)
+        public ProjectTask(string name)
         {
             _name = name;
         }
-        public Task(string name, string elapsedTime)
+        public ProjectTask(string name, string elapsedTime)
         {
             _name = name;
             _time = elapsedTime;

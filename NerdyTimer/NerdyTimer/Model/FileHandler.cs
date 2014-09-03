@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -50,7 +51,7 @@ namespace NerdyTimer.Model
             foreach (Project project in Projects)
             {
                 SaveableProjects.Projects.Add(new SaveableProject(project.Name));
-                foreach (Task task in project.Tasks)
+                foreach (ProjectTask task in project.Tasks)
                 {
                     SaveableProjects.Projects.Last().AddTask(new SaveableTask(task.Name, task.Time));
                 }
@@ -69,19 +70,26 @@ namespace NerdyTimer.Model
             ItemsChangeObservableCollection<Project> loadedProjects = new ItemsChangeObservableCollection<Project>();
 
             //Read from file
-            using (Stream stream = new FileStream("NerdyTimer_Savings.txt", FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
+            try
             {
-                SaveableProjectsContainer SaveableProjectsContainer = (SaveableProjectsContainer)BinaryFormatter.Deserialize(stream);
-
-                //Load mechanism
-                foreach (SaveableProject SavedProject in SaveableProjectsContainer.Projects)
+                using (Stream stream = new FileStream("NerdyTimer_Savings.txt", FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
                 {
-                    loadedProjects.Add(new Project(SavedProject.Name));
-                    foreach (SaveableTask SavedTask in SavedProject.Tasks)
+                    SaveableProjectsContainer SaveableProjectsContainer = (SaveableProjectsContainer)BinaryFormatter.Deserialize(stream);
+
+                    //Load mechanism
+                    foreach (SaveableProject SavedProject in SaveableProjectsContainer.Projects)
                     {
-                        loadedProjects.Last().AddTask(new Task(SavedTask.Name, SavedTask.Time));
-                    }
-                }                
+                        loadedProjects.Add(new Project(SavedProject.Name));
+                        foreach (SaveableTask SavedTask in SavedProject.Tasks)
+                        {
+                            loadedProjects.Last().AddTask(new ProjectTask(SavedTask.Name, SavedTask.Time));
+                        }
+                    }                
+                }
+            }
+            catch (Exception e)
+            {
+                //Do nothing, NerdyTimer_Savings.txt isn't created yet which is fine
             }
 
             return loadedProjects;

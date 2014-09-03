@@ -13,10 +13,10 @@ namespace NerdyTimer.Model
         {
             _name = name;
 
-            Tasks = new ItemsChangeObservableCollection<Task>();
+            Tasks = new ItemsChangeObservableCollection<ProjectTask>();
         }
 
-        public ItemsChangeObservableCollection<Task> Tasks { get; set; }
+        public ItemsChangeObservableCollection<ProjectTask> Tasks { get; set; }
 
         public string Name
         {
@@ -30,13 +30,13 @@ namespace NerdyTimer.Model
 
         public void AddTask(string name)
         {
-            Tasks.Add(new Task(name));
+            Tasks.Add(new ProjectTask(name));
         }
         public void AddTask(string name, string elapsedTime)
         {
-            Tasks.Add(new Task(name, elapsedTime));
+            Tasks.Add(new ProjectTask(name, elapsedTime));
         }
-        public void AddTask(Task task)
+        public void AddTask(ProjectTask task)
         {
             Tasks.Add(task);
         }

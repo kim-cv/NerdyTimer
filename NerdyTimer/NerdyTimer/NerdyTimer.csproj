@@ -83,7 +83,7 @@
     <Compile Include="Model\SaveableClasses\SaveableProject.cs" />
     <Compile Include="Model\SaveableClasses\SaveableTask.cs" />
     <Compile Include="Model\TaskTimer.cs" />
-    <Compile Include="Model\Task.cs" />
+    <Compile Include="Model\ProjectTask.cs" />
     <Compile Include="Model\SaveableClasses\SaveableProjectsContainer.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\CombinedViewModel.cs" />
